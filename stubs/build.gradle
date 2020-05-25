@@ -1,0 +1,49 @@
+group 'com.ads'
+
+apply plugin: 'groovy'
+apply plugin: 'application'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+mainClassName = 'com.ads.stubs.Main'
+
+repositories {
+    mavenCentral()
+}
+
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "com.github.jengelman.gradle.plugins:shadow:5.1.0"
+    }
+}
+apply plugin: "com.github.johnrengelman.shadow"
+
+shadowJar {
+    baseName = 'service-stub'
+    classifier = null
+    version = null
+}
+
+dependencies {
+    compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.4.11'
+    compile group: 'commons-cli', name: 'commons-cli', version: '1.2'
+    compile group: 'com.sparkjava', name: 'spark-core', version:'2.6.0'
+    compile group: 'org.slf4j', name:'slf4j-simple', version: '1.7.25'
+    compile group: 'org.codehaus.groovy', name:'groovy-all', version: '2.4.13'
+}
+
+jar.enabled = false
+startScripts.enabled = false
+distTar.enabled = false
+distZip.enabled = false
+shadowDistTar.enabled = false
+shadowDistZip.enabled = false
+startShadowScripts.enabled = false
+
+build.dependsOn(shadowJar)
